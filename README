@@ -1,0 +1,18 @@
+============================================================
+MOX - Meteorological and Oceanographic XML
+============================================================
+
+Norwegian Meteorological Institute (met.no)
+Box 43 Blindern
+0313 OSLO
+NORWAY
+
+email: wdb@met.no
+
+This is a meteorological/oceanographic data exchange format 
+developed at met.no. It is developed as an application 
+schema of the Geographic Markup Language (GML) version 
+3.2.1. The mox schema is used in the wdb weather and water 
+database.
+
+
