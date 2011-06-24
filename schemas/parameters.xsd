@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:mox="http://wdb.met.no/wdbxml" 
+			xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+			xmlns:gml="http://www.opengis.net/gml/3.2" 
+	targetNamespace="http://wdb.met.no/wdbxml" version="0.1">
+	<xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+	<xsd:include schemaLocation="baseTypes.xsd"/>
+
+	<!-- Weather Parameters -->
+	<xsd:element name="airPressure" type="mox:PressureType"/>
+	<xsd:element name="airTemperature" type="mox:TemperatureType"/>
+	<xsd:element name="totalCloudCover" type="mox:ScaleType"/>
+	<xsd:element name="lowCloudCover" type="mox:ScaleType"/>
+	<xsd:element name="mediumCloudCover" type="mox:ScaleType"/>
+	<xsd:element name="highCloudCover" type="mox:ScaleType"/>
+	<xsd:element name="fogCover" type="mox:ScaleType"/>
+	<xsd:element name="humidity" type="mox:ScaleType"/>
+	<xsd:element name="precipitation" type="mox:LengthType"/>
+	<xsd:element name="windDirection" type="mox:AngleType"/>
+	<xsd:element name="windSpeed" type="mox:SpeedType"/>
+	
+	<xsd:element name="extremeWeatherWarning" type="xsd:string"/>	
+	<xsd:element name="yrWeatherSymbol" type="gml:CodeType"/>	
+
+	<!-- Sea and Wave Parameters -->
+	<xsd:element name="seaBottomTopography" type="mox:LengthType"/>
+	<xsd:element name="seaCurrentDirection" type="mox:AngleType"/>
+	<xsd:element name="seaCurrentSpeed" type="mox:SpeedType"/>
+	<xsd:element name="seaIcePresence" type="gml:CodeType"/>
+	<xsd:element name="seaSalinity" type="gml:CodeType"/>
+	<xsd:element name="seaSurfaceHeight" type="mox:LengthType"/>
+	<xsd:element name="seaTemperature" type="mox:TemperatureType"/>
+	<xsd:element name="meanTotalWaveDirection" type="mox:AngleType"/>
+	<xsd:element name="peakTotalWaveDirection" type="mox:AngleType"/>
+	<xsd:element name="significantTotalWaveHeight" type="mox:LengthType"/>
+
+</xsd:schema>

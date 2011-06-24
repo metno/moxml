@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:mox="http://wdb.met.no/wdbxml" 
+			xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+			xmlns:gml="http://www.opengis.net/gml/3.2" 
+	targetNamespace="http://wdb.met.no/wdbxml" version="0.1">
+	<xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+
+	<!-- Analysis Time -->	
+	<xsd:element name="analysisTime" type="gml:TimeInstantPropertyType">
+		<xsd:annotation>
+			<xsd:documentation>The analysis time denotes the instant in time
+				used as a base for the forecast. In principle, this could be 
+				denoted using a time period, but for the current usage we
+				restrict the element to time instants.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	
+	<!-- Issue Time -->
+	<xsd:element name="issueTime" type="gml:TimeInstantPropertyType">
+		<xsd:annotation>
+			<xsd:documentation>The issue time denotes the instant in time
+				when the forecast was issued.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="nextIssueTime" type="gml:TimeInstantPropertyType">
+		<xsd:annotation>
+			<xsd:documentation>The next issue time denotes the next instant 
+				in time when a forecast will become available. It may also be
+				reffered to as the refresh time.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<!-- Valid Time -->
+	<xsd:element name="validTime" type="gml:TimePrimitivePropertyType">
+		<xsd:annotation>
+			<xsd:documentation>The valid time is the moment or period of time for which a given forecast
+				or observation is considered valid.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

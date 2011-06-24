@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:wdb="http://wdb.met.no/wdbxml"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:gml="http://www.opengis.net/gml/3.2"
+	targetNamespace="http://wdb.met.no/wdbxml" version="0.1">
+	<xsd:import namespace="http://www.opengis.net/gml/3.2"
+		schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+
+	<!-- Base Units -->
+	<xsd:complexType name="AngleType">
+		<xsd:annotation>
+			<xsd:documentation>This is the base measure for
+				angles.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="gml:AngleType"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="ScaleType">
+		<xsd:annotation>
+			<xsd:documentation>Value of a scale factor (or ratio) that has no physical
+				unit. Uses the MeasureType with the restriction that the unit of measure
+				referenced by uom must be suitable for a scale factor, such as percent,
+				permil, or parts-per-million.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="gml:ScaleType">
+				<xsd:attribute name="uom" use="required">
+					<xsd:simpleType>
+						<xsd:restriction base="gml:UomIdentifier">
+							<xsd:enumeration value="%"/>
+							<xsd:enumeration value="ppm"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="LengthType">
+		<xsd:annotation>
+			<xsd:documentation>Value of a scale factor (or ratio) that has no physical
+				unit. Uses the MeasureType with the restriction that the unit of measure
+				referenced by uom must be suitable for a scale factor, such as percent,
+				permil, or parts-per-million.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="gml:LengthType">
+				<xsd:attribute name="uom" use="required">
+					<xsd:simpleType>
+						<xsd:restriction base="gml:UomIdentifier">
+							<xsd:enumeration value="km"/>
+							<xsd:enumeration value="m"/>
+							<xsd:enumeration value="cm"/>
+							<xsd:enumeration value="mm"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="TemperatureType">
+		<xsd:annotation>
+			<xsd:documentation>This is the base measure for
+				temperatures.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="gml:MeasureType">
+				<xsd:attribute name="uom" use="required">
+					<xsd:simpleType>
+						<xsd:restriction base="gml:UomIdentifier">
+							<xsd:enumeration value="K"/>
+							<xsd:enumeration value="Cel"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	
+
+		<xsd:complexType name="PressureType">
+		<xsd:annotation>
+			<xsd:documentation>This is the base measure for
+				pressure.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="gml:MeasureType">
+				<xsd:attribute name="uom" use="required">
+					<xsd:simpleType>
+						<xsd:restriction base="gml:UomIdentifier">
+							<xsd:enumeration value="hPa"/>
+							<xsd:enumeration value="Pa"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	
+	<xsd:complexType name="SpeedType">
+		<xsd:annotation>
+			<xsd:documentation>This is the base measure for velocity
+				(speed).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:restriction base="gml:SpeedType">
+				<xsd:attribute name="uom" use="required">
+					<xsd:simpleType>
+						<xsd:restriction base="gml:UomIdentifier">
+							<xsd:enumeration value="m/s"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	
+</xsd:schema>

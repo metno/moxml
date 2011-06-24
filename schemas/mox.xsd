@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+	targetNamespace="http://wdb.met.no/wdbxml"
+	xmlns:metno="http://api.met.no"
+	xmlns:mox="http://wdb.met.no/wdbxml"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:gml="http://www.opengis.net/gml/3.2"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	elementFormDefault="qualified" 
+	version="0.1">
+	<xsd:annotation>
+		<xsd:appinfo>mox.xsd</xsd:appinfo>
+		<xsd:documentation>Top level MOX Schema</xsd:documentation>
+	</xsd:annotation>
+	<xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+	<!-- MOX Schemas -->
+	<xsd:include schemaLocation="time.xsd"/>
+	<xsd:include schemaLocation="baseTypes.xsd"/>
+	<xsd:include schemaLocation="parameters.xsd"/>
+	<xsd:include schemaLocation="forecasts.xsd"/>
+</xsd:schema>

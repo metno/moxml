@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mox:Forecasts gml:id="pt0-20090210" 
+	xmlns="http://wdb.met.no/wdbxml"
+	xmlns:mox="http://wdb.met.no/wdbxml"
+	xmlns:metno="http://api.met.no"
+	xmlns:gml="http://www.opengis.net/gml/3.2"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://api.met.no http://wdb.met.no/wdbxml/schema/products.xsd">
+	
+		
+	<gml:description>This is a test implementation of a GML document for Yr Ocean Forecasts.</gml:description>
+	<mox:procedure xlink:href="http://api.met.no/yroceanforecast"/> <!-- Link to HTML/XML description of Hav&Kyst product generation procedure -->
+	<mox:observedProperty xlink:href="urn:x-ogc:def:phenomenon:weather"/>
+	<mox:forecastPoint>
+		<gml:Point gml:id="pt-0" srsName="urn:ogc:def:crs:epsg:4326">
+			<gml:pos>38.99 77.99 0</gml:pos> <!-- X Y Z = Lon Lat Height -->
+		</gml:Point>
+	</mox:forecastPoint>
+	<mox:analysisTime> <!-- Termin -->
+		<gml:TimeInstant gml:id="at-0">
+			<gml:timePosition>2009-02-10T00:00:00Z</gml:timePosition>
+		</gml:TimeInstant>
+	</mox:analysisTime>
+	<mox:issueTime> <!-- Tid hvor dokument skabt -->
+		<gml:TimeInstant gml:id="it-0">
+			<gml:timePosition>2009-02-10T10:43:00Z</gml:timePosition>
+		</gml:TimeInstant>
+	</mox:issueTime>
+	<mox:nextIssueTime> <!-- Refreshtime / nextrun -->
+		<gml:TimeInstant gml:id="nit-0">
+			<gml:timePosition>2009-02-10T12:00:00Z</gml:timePosition>
+		</gml:TimeInstant>
+	</mox:nextIssueTime>
+	<mox:validTime>
+		<gml:TimePeriod gml:id="vt-0">
+			<gml:beginPosition>2009-02-10T11:00:00Z</gml:beginPosition>
+			<gml:endPosition>2009-02-12T12::00Z</gml:endPosition>
+		</gml:TimePeriod>
+	</mox:validTime>
+	
+	<mox:forecast>
+		<metno:OceanForecast gml:id="f-1">
+			<mox:validTime>
+				<gml:TimeInstant gml:id="vt-1">
+					<gml:timePosition>2009-02-10T12:00:00Z</gml:timePosition>
+				</gml:TimeInstant>
+			</mox:validTime>
+			<mox:airPressure uom="hPa">34.2</mox:airPressure>			
+			<mox:airTemperature uom="Cel">15.0</mox:airTemperature>
+			<mox:seaCurrentDirection uom="m">69.9</mox:seaCurrentDirection>
+			<mox:seaCurrentSpeed uom="m/s">0.5</mox:seaCurrentSpeed>
+			<mox:seaSalinity>0.5</mox:seaSalinity>
+			<mox:seaSurfaceHeight uom="m">1.0</mox:seaSurfaceHeight>
+			<mox:seaTemperature uom="Cel">10.0</mox:seaTemperature>
+			<mox:waveDirection uom="deg">72.4</mox:waveDirection>
+			<mox:significantWaveHeight uom="m">0.5</mox:significantWaveHeight>
+			<mox:windDirection uom="deg">89.1</mox:windDirection>
+			<mox:windSpeed uom="m/s">0.6</mox:windSpeed>
+		</metno:OceanForecast>
+	</mox:forecast>
+	
+	<mox:forecast>
+		<metno:OceanForecast gml:id="f-2">
+			<mox:validTime>
+				<gml:TimeInstant gml:id="vt-2">
+					<gml:timePosition>2009-02-10T12:00:00Z</gml:timePosition>
+				</gml:TimeInstant>
+			</mox:validTime>
+			<mox:airPressure uom="hPa">34.2</mox:airPressure>			
+			<mox:airTemperature uom="Cel">15.0</mox:airTemperature>
+			<mox:seaCurrentDirection uom="m">69.9</mox:seaCurrentDirection>
+			<mox:seaCurrentSpeed uom="m/s">0.5</mox:seaCurrentSpeed>
+			<mox:seaSalinity>0.5</mox:seaSalinity> 
+			<mox:seaSurfaceHeight uom="m">1.0</mox:seaSurfaceHeight>
+			<mox:seaTemperature uom="Cel">10.0</mox:seaTemperature>
+			<mox:waveDirection uom="deg">72.4</mox:waveDirection>
+			<mox:significantWaveHeight uom="m">0.5</mox:significantWaveHeight>
+			<mox:windDirection uom="deg">89.1</mox:windDirection>
+			<mox:windSpeed uom="m/s">0.6</mox:windSpeed>
+		</metno:OceanForecast>
+	</mox:forecast>
+	
+	<!-- And so on... -->
+
+	<mox:forecast>
+		<metno:OceanForecast gml:id="f-10">
+			<mox:validTime>
+				<gml:TimePeriod gml:id="vt-10">
+					<gml:beginPosition>2009-02-10T11:00:00Z</gml:beginPosition>
+					<gml:endPosition>2009-02-10T12:00:00Z</gml:endPosition>
+				</gml:TimePeriod>
+			</mox:validTime>
+			<mox:precipitation uom="mm">0.0</mox:precipitation>
+		</metno:OceanForecast>
+	</mox:forecast>
+
+	<mox:forecast>
+		<metno:OceanForecast gml:id="f-11">
+			<mox:validTime>
+				<gml:TimePeriod gml:id="vt-11">
+					<gml:beginPosition>2009-02-10T12:00:00Z</gml:beginPosition>
+					<gml:endPosition>2009-02-10T13:00:00Z</gml:endPosition>
+				</gml:TimePeriod>
+			</mox:validTime>
+			<mox:precipitation uom="mm">0.0</mox:precipitation>
+		</metno:OceanForecast>
+	</mox:forecast>
+
+	<!-- And so on... -->
+			
+</mox:Forecasts>

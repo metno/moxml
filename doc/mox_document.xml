@@ -1,0 +1,769 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                      "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd"
+[ 
+	<!ENTITY % wdb.entities SYSTEM "docbook/mox_entities.ent">
+	%wdb.entities;
+]
+>
+
+<book>
+	<title>MOX Manual</title>
+	
+	<bookinfo>
+		<editor>
+			<firstname>Michael</firstname>
+			<othername>O.</othername>
+			<surname>Akinde</surname>
+			
+			<affiliation>
+				<orgname> <ulink url="http://www.met.no">met.no</ulink>
+				</orgname>
+				
+			<address>
+          <street>Niels Henrik Abelsvei 4</street> 
+          <city>Oslo</city>
+          <country>Norway</country>
+          <email>moxm@met.no</email>
+        </address>
+			</affiliation>
+		</editor>
+		<abstract>
+			<para>MOX is a GML application schema for meteorological and oceanographic
+				data.</para>
+		</abstract>
+	</bookinfo>
+	
+	<chapter id="cha:mox_introduction">
+		<title>Introduction</title>
+		
+		<sect1 id="sec:purpose">
+			<title>Purpose</title>
+			
+			<para>This document is a guide to the Meteorological and Oceanographic
+				eXchange (for the purposes of this document referred to as MOX) format 
+				developed at met.no. The document describes the conceptual model of
+				MOX, details the structure of the application schema, and includes
+				example documents in the appendix.</para>
+			
+			<para>MOX is intended to provide a formal representation of weather/water
+				phenomena, observations, products and temporaspatial features related
+				to meteorological and oceanographic data and products. It has been developed
+				based on the products being implemented on api.met.no, but the approach is
+				data-centric, which means that it can be easily extended to alternative product
+				portfolios.</para>
+
+		</sect1>
+		
+		<sect1 id="sec:standards">
+			<title>Standards-based Data Modelling</title>
+			
+			<para>MOX follows the principles of ISO19100 and Open Geospatial Consortium
+				(OGC) standards and is designed as an application schema of the Geographic
+				Markup Language (GML) version 3.2.1. By conforming to Annex A of the GML
+				Specification, it is intended that the MOX dataset will be compatible with
+				third-party GML-compliant applications and hence enable users to reap the
+				benefits of open Geographic Information System (GIS) standards, as
+				developed by the OGC.</para>
+			
+			<sect2 id="sec:gml">
+				<title>Geography Markup Language</title>
+				
+				<para>GML provides reference XML schemas for a range of 'building blocks' 
+					detailed by other standards such as geometry and topology, coverage data,
+					gridded data, spatial reference systems and temporal reference systems.
+				    GML is a large specification, but few applications require the full range
+				of its capabilities, and it is not the main purpose of the standard to be
+				used in such a way. The intent of the standard is to provide these building
+				blocks for the canonical encoding of feature-types within a particular
+				application domain. While GML elements may be used in an arbitrary manner,
+				the main purpose is to encode datasets according to an application schema.
+				That is the approach taken in the MOX format.</para>
+				
+			</sect2>
+			
+			<sect2 id="sec:features">
+				<title>Features</title>
+				
+				<para>The GML standard is based heavily around the Domain Reference
+				Model (ISO 19101) - an abstract information architecture for 
+				geospatial data infrastructures. At the core of this model is the
+				geospatial Dataset containing Feature instances. A Feature is defined
+				broadly as an "abstraction of a real world phenomena"; a representation
+				of any important aspects of the universe being described. Essentially,
+				one may say, Features provide an object view of the data and may be
+				characterised in terms of their properties, associations with other 
+				features, and the operations that may be performed upon them. 
+				Feature instances form the primary components of geospatial datasets.</para>			
+			</sect2>
+			
+			<sect2 id="sec:application_schema">
+				<title>Application Schema</title>
+				
+				<para>Feature types define the individual information classes in a
+				dataset. The dataset itself is desribed within an Application Schema.
+				The application schema defines the logical structure and semantic content
+				of the dataset and specifies what feature types it may contain. The
+				MOX schema is developed as an application schema of GML.</para> 
+
+			</sect2>
+
+		</sect1>
+				
+		<sect1 id="sec:outline">
+			<title>Outline</title>
+			
+			<para>The document is structured as follows:</para>
+			
+			<itemizedlist>
+				<listitem>
+					<para>Conceptual Model: a description the conceptual model of
+						MOX</para>
+				</listitem>
+				<listitem>
+					<para>MOX Features: a description of the core features; forecasts
+						and observations</para>
+				</listitem>
+				<listitem>
+					<para>Geographic Markup: a description of the GML markup utilized for
+						describing geospatial data</para>
+				</listitem>
+				<listitem>
+					<para>Temporal Markup: a description of the markup utilized to describe
+						temporal information (i.e., the various times in the data)</para>
+				</listitem>
+				<listitem>
+					<para>Domain Parameters: a description of the principles used to
+						describe the parameters in the model</para>
+				</listitem>
+				<listitem>
+					<para>Met.no Products: a description of the specific forecast
+						products developed for api.met.no</para>
+				</listitem>
+				<listitem>
+					<para>Examples: a set of XML implementation examples</para>
+				</listitem>
+			</itemizedlist>
+			
+		</sect1>
+		
+	</chapter>
+	
+	<chapter id="cha:conceptual_model">
+		<title>Conceptual Model</title>
+		
+		<sect1 id="sec:conceptual_overview">
+			<title>Overview</title>
+			
+			<para>The conceptual model of MOX consists of a number of layers that define a
+				hierarchical structure of data types, measures and codes, geometry,
+				observations, forecasts, and weather products and services.</para>
+			
+			<para>The base layer consists of basic domain-neutral entities such as
+				Measurements and Codes, as well as the basic data types, Geometry types and GML
+				Features. The majority of these basic components are taken from GML, and inherited by
+				components in the other levels of the model. The core Measures in the base
+				layer consis of domain-neutral measures encapsulating real-world,
+				usually physical, concepts such as e.g., Temperature. These core measures
+				are not specific to either the meteorological or oceanographic domain and
+				are usually specializations of the gml:MeasureType.</para>
+			
+			<para>The domain layer defines the majority of the MOX entities. Measures from
+				the base layer are refined to domain measure entities; for example, the
+				measures AirTemperature and SeaTemperature refine the base Temperature
+				measure with meteorological or oceanographic restrictions (if any). It
+				also defines domain specific data types and geometry structures as
+				required. Features are specialized to Forecast and Observation
+				structures.</para>
+			
+			<para>The product and services layer defines specific product
+				feature instances. Each product portfolio is defined within its own namespace in
+				order to avoid name clashes between similar products. This also makes it
+				easy to develop new product and service portfolios, and permits for a strict
+				validation scheme for individual products without compromising the
+				models flexibility and extensibility.</para>
+			
+		</sect1>
+		
+		<sect1 id="sec:conceptual_features">
+			<title>MOX Feature Model</title>
+			
+			<para>The General Feature Model presented in ISO 19101 and 19109 define a geographic feature type in terms of
+				its characteristic set of properties, including attributes, associations, and behaviors. This is
+				a particularly object-centric viewpoint, that describes the world in terms of the set of discrete
+				identifiable objects that occupy it. The principal alternative model is the coverage, described in ISO 19123.
+				This viewpoint focuses on the variation of a property within the domain of interest (e.g.,
+				a grid). A coverage view is property-centric. These viewpoints are not exclusive; both are used in analysis 
+				and modelling, and both are supported by the GML Feature and Coverages model.</para>
+			
+			<para>The domain of MOX contain two major entities: Observations and Forecasts.</para>
+			
+			<para>For the observation model, we intend to lean on the OGC schema for Observations and Measurements (OM). 
+				The OGC	definition of an observation is as follows:</para>
+
+			<para>"An Observation is an action with a result which has a value describing some phenomenon. ... 
+				An observation feature binds a result to a feature of interest. An observation uses a
+			procedure to determine the value of the result, which may involve a sensor or observer, 
+			analytical procedure, simulation or other numerical process."</para>
+			
+			<para>Note that under this definition, a forecast is essentially a type of observation, 
+			the difference being that the procedure used is usually a numerical process, with the
+			time of the observation (usually) set in the future.</para>
+
+			<para>Observations and Features are thus constructed as GML features in the MOX format, with a 
+				common ancestor element. We base the common structures on the OM schema; we diverge from it,
+				however, in dealing with forecasts and collections of features.</para>
+			
+			<para>A group of features, e.g., a time series of forecasts, would be represented as a FeatureCollection. 
+				A FeatureCollection is essentially a Feature that may contain other Features. A container for
+				Forecasts in our model is thus able to specify a procedure, define a spatio-temporal space and so
+				on. The primary difference between a base forecast and observation class and the container classes
+			is that the container classses may not contain parameter values, only feature members.</para>			
+						
+		</sect1>	
+
+		<sect1 id="sec:conceptual_parameters">
+			<title>Measures, Codes and Parameters</title>
+			
+			<para>GML defines a generic model for measures and code types whereby these may be introduced as strongly typed 
+			properties of the feature classes. This is a simple approach that fits well with the data-centric approach 
+			intended in the MOX format; we have therefore chosen to build on this approach rather than developing some
+			more elaborate data structure for the representation of data values.</para>
+			
+			<para>We define base measure types based around physical and real-world phenomena. These are further 
+			specialized as meteorological and real world phenomena. We follow the base principle of WDB in working
+			with single domain parameters; i.e., parameters do not, as a rule, include information about level 
+				(altitude or depth), time, or other information that can be derived from or represented by
+			other elements of the MOX model.</para>
+			
+			<para>This is a strongly typed approach; it follows that the set of parameters defined initially cannot hope
+			to cover all relevant aspects of the domain. It is thus intended that the parameter set be extended as required
+			by the applications developed for the schema.</para>
+			
+		</sect1>	
+		
+	</chapter>
+	
+	<chapter id="cha:mox_features">
+		<title>Domain Features</title>
+		
+		<para>The domain features in MOX are the basic templates for describing observations, forecasts
+			and products.</para>
+				
+		<sect1 id="sec:mox_forecast">
+			<title>MOX Forecast</title>
+			
+			<para>The mox:ForecastType is the basic feature representation in the model 
+				of a Meteorological or Oceanographic forecast. The forecast model is based of
+				the Observation model in the OGC Observations and Measures specification; the
+				key difference is that in MOX, most of the properties are optional.</para>
+			
+			<para>The properties of a mox:Forecast element are:</para>
+			
+			<itemizedlist>
+				<listitem>
+					<para>procedure: (optional) the description of the procedure used to generate the mox:Forecast</para>
+				</listitem>
+				<listitem>
+					<para>observedProperty: (optional) the description or a reference to the property being observed or forecast; e.g., the weather</para>
+				</listitem>
+				<listitem>
+					<para>location: (optional) the geographic location of the forecast, described using some form of geographic markup or location reference</para>
+				</listitem>
+				<listitem>
+					<para>analysisTime: (optional) the analysis time of the forecast</para>
+				</listitem>
+				<listitem>
+					<para>issueTime: (optional) the time when the forecast was issued</para>
+				</listitem>
+				<listitem>
+					<para>nextIssueTime: (optional) the time when the next forecast of this type is expected to be issued</para>
+				</listitem>
+				<listitem>
+					<para>validTime: (optional) the time that the forecast is valid for</para>
+				</listitem>
+			</itemizedlist>
+			
+			<para>The forecast results are represented using parameter elements.</para>			
+			
+		</sect1>
+
+		<sect1 id="sec:mox_forecastcollection">
+			<title>MOX Forecasts Collection</title>
+			
+			<para>A series of mox:Forecast elements will often be grouped together in a mox:Forecasts collection.
+				A forecast collection is basically a forecast, except that it contains other mox:Forecast objects
+				rather than parameter elements. It allows for the same set of properties as mox:Forecast.</para>
+
+			<itemizedlist>
+				<listitem>
+					<para>procedure: (optional)</para>
+				</listitem>
+				<listitem>
+					<para>observedProperty: (optional)</para>
+				</listitem>
+				<listitem>
+					<para>location: (optional)</para>
+				</listitem>
+				<listitem>
+					<para>analysisTime: (optional)</para>
+				</listitem>
+				<listitem>
+					<para>issueTime: (optional)</para>
+				</listitem>
+				<listitem>
+					<para>nextIssueTime: (optional)</para>
+				</listitem>
+				<listitem>
+					<para>validTime: (optional)</para>
+				</listitem>
+			</itemizedlist>
+			
+			<para>In order to aid succinctness of expression, it will be assumed always that properties of 
+				a MOX featurecollection are inherited by its contained MOX features, unless these are 
+			locally overwritten; i.e., if the mox:Forecasts object sets the analysis time to a value
+			2009-01-01T12:00:00Z, then all mox:Forecast objects in the collection will have that
+				analysis time, unless a different analysis time is defined within the mox:Forecast object itself.
+			</para>
+			
+		</sect1>
+				
+	</chapter>
+
+	<chapter id="cha:mox_geometry">
+		<title>Geographic Markup</title>
+		
+		<para>Each MOX feature may contain a property specifying geographic information as a
+			GML geometry object. If no geographic information is given for a feature, the geography shall
+			be specified as part of the larger context that the feature object is a part of. A feature 
+			collection would be a typical example of such a larger context.</para>
+				
+		<sect1 id="sec:geometry_properties">
+			<title>MOX Geographic Properties</title>
+			
+			<para>The geographic properties in MOX are application-specific (as recommended by the GML standard).
+				The following geographic properties are declared in MOX to specify the location of </para>
+					
+			<table frame="all">
+				<title>MOX Geographic Properties</title>
+				<tgroup cols="2">
+					<colspec align="left"/>
+					<colspec align="left"/>
+					<thead>
+						<row>
+							<entry> MOX geographic property</entry>
+							<entry> Associated GML geometry object</entry>
+						</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>mox:forecastPoint</entry>
+							<entry>gml:Point</entry>
+						</row>
+						<row>
+							<entry>-</entry>
+							<entry>-</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+			
+			<para>A MOX geometry property may either encapsulate a GML geometry element of the
+			appropriate type (as specified above) or it may be an XLink reference to a remote 
+			geometry element (where remote includes geometry elements located elsewhere in the
+			same document). A geometry property must contain either a reference or an appropriate
+				GML geometry element, but not both.</para>
+			
+		</sect1>
+
+		<sect1 id="sec:gml_point">
+			<title>GML Point</title>
+			
+			<para>A point consists of a &lt;gml:Point&gt; element with a child &lt;gml:pos&gt; element. A point
+				 is defined by a single coordinate tuple. The attributes of the gml:Point define a reference id 
+				(required for all GML objects) and should reference the spatial reference system using the 
+				srsName attribute. If no srsName is specified for a given object, the spatial reference system is
+				assumed to be identical with that specified in the larger context that the object is part of.</para>
+			
+			<para>The &lt;gml:pos&gt; describes the geographic location of the point as two or three coordinates: 
+				longitude and latitude or longitude, latitude, and distance above (or below, if the coordinate is
+				negative) sea level in metres. The coordinate values in &lt;gml:pos&gt; are separated by a space.
+				</para>
+			
+			<programlisting>
+	&lt;!-- Point specified with three coordinates: 
+		longitude(x), latitude(y), and distance above sea level(z) --&gt;
+	&lt;gml:Point gml:id="point-id" gml:srsName="urn:ogc:def:crs:epsg:4326"&gt;
+		&lt;gml:pos&gt;9.8 61.2 25&lt;/gml:pos&gt;		
+	&lt;/gml:Point&gt;
+	&lt;!-- Point specified with two coordinates:
+		longitude(x) and latitude(y) --&gt;
+	&lt;gml:Point gml:id="point-id" gml:srsName="urn:ogc:def:crs:epsg:4326"&gt;
+		&lt;gml:pos&gt;9.8 61.2&lt;/gml:pos&gt;		
+	&lt;/gml:Point&gt;
+			</programlisting>
+					
+			<para>Note that while &lt;gml:coordinates&gt; remains an alternative to &lt;gml:pos&gt; in the 
+				GML specification, usage of this element is deprecated and MOX applications are not required to be able to handle this element.</para>
+			
+			<para>The spatial reference system used in srsName must be EPSG.</para>
+		</sect1>
+				
+	</chapter>
+
+	<chapter id="cha:mox_temporal">
+		<title>Temporal Markup</title>
+		
+		<para>MOX features may contain a variety of temporal information that specify the various times
+			relevant to the products and services of the document. As in the case of geographic objects,
+			temporal information for an object may de specified as part of the larger context that the 
+			MOX feature is a part of.</para>
+				
+		<sect1 id="sec:temporal_properties">
+			<title>MOX Temporal Properties</title>
+			
+			<para>The geographic properties in MOX are application-specific (as recommended by the GML standard).
+				The following geographic properties are declared in MOX to specify the location of </para>
+					
+			<table frame="all">
+				<title>MOX Temporal Properties</title>
+				<tgroup cols="3">
+					<colspec align="left"/>
+					<colspec align="left"/>
+					<colspec align="left"/>
+					<thead>
+						<row>
+							<entry> MOX temporal property</entry>
+							<entry> Associated GML temporal object</entry>
+							<entry> Description</entry>
+						</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>mox:analysisTime</entry>
+							<entry>gml:TimeInstant</entry>
+							<entry>The time at which the analysis that produces a forecast or product is performed</entry>
+						</row>
+						<row>
+							<entry>mox:issueTime</entry>
+							<entry>gml:TimeInstant</entry>
+							<entry>The time at which a forecast or product is issued</entry>
+						</row>
+						<row>
+							<entry>mox:nextIssueTime</entry>
+							<entry>gml:TimeInstant</entry>
+							<entry>The time at which the next version of a forecast or product is expected to be issued. The time when it would be suitable to refresh a product</entry>
+						</row>
+						<row>
+							<entry>mox:validTime</entry>
+							<entry>gml:TimeInstant | gml:TimePeriod</entry>
+							<entry>The time for which a set of values in a MOX feature are valid. This may be a specific instant or a time window
+								(usually the case for aggregate values)</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+			
+			<para>A MOX geometry property may either encapsulate a GML geometry element of the
+			appropriate type (as specified above) or it may be an XLink reference to a remote 
+			geometry element (where remote includes geometry elements located elsewhere in the
+			same document). A geometry property must contain either a reference or an appropriate
+				GML geometry element, but not both.</para>
+			
+		</sect1>
+
+		<sect1 id="sec:gml_timeinstant">
+			<title>GML TimeInstant</title>
+			
+			<para>A time instant consists of a &lt;gml:TimeInstant&gt; element with a child &lt;gml:timePosition&gt; element. 
+				As this is a GML object, the gml:id attribute must be specified and it may contain the optional standard GML object
+				properties: abstractMetadataProperty, description, descriptionReference, and name.</para>
+				
+			<para>For the current version of the MOX format, we limit the TimeInstant type to the timePosition property.</para>
+					
+			<para>The &lt;gml:timePosition&gt; property supports the description of a temporal position in a variety of
+				different formats. MOX format documents are expected to adhere to SO 8601 format. The timePosition
+				may be either date alone (in which case 00:00:00+00 is assumed for the timestamp) or a full date/time value.
+				Time zones should always be specified for a timestamp numerically; though 'Z' is allowed as a legal abbreviation 
+				for denoting zulu time.
+				</para>
+			
+			<para>Inexact temporal positions may be expressed using the optional indeterminatePosition attribute. This allows
+			the object to specify after, before, now, and unknown time positions.</para>
+
+			<itemizedlist>
+				<listitem>
+					<para>"unknown" indicates that the specific value for the temporal position is not known</para>
+				</listitem>
+				<listitem>
+					<para>"now" indicates that the specific value should be replaced with the current timestamp whenever the value is accessed</para>
+				</listitem>
+				<listitem>
+					<para>"before" indicates that the actual temporal position is unknown, but is before the specified value</para>
+				</listitem>
+				<listitem>
+					<para>"after" indicates that the actual temporal position is unknown, but is after the specified value</para>
+				</listitem>
+			</itemizedlist>
+						
+			<programlisting>
+	&lt;!-- Time instant specified with timestamp --&gt;
+	&lt;gml:TimeInstant gml:id="time-id"&gt;
+		&lt;gml:timePosition&gt;2009-02-05T13:20:20Z&lt;/gml:timePosition&gt;		
+	&lt;/gml:TimeInstant&gt;
+	&lt;!-- Time instant specifying an indeterminate time --&gt;
+	&lt;gml:TimeInstant gml:id="time-id"&gt;
+		&lt;gml:timePosition indeterminatePosition="after"&gt;2009-02-05T13:20:20Z&lt;/gml:timePosition&gt;		
+	&lt;/gml:TimeInstant&gt;
+			</programlisting>
+					
+		</sect1>
+
+		<sect1 id="sec:gml_timeperiod">
+			<title>GML TimePeriod</title>
+			
+			<para>A time period in MOX consists of a &lt;gml:TimePeriod&gt; element with two time position children:
+				&lt;gml:beginPosition&gt; and &lt;gml:endPosition&gt;. Time period is a GML object which means it must
+				have an identity. It also, as other GML objects, may contain the standard GML object optionals: 
+				abstractMetadataProperty, description, descriptionReference, and name.</para>
+				
+			<para>GML version 3.2.1 permits the specification of a Time Period with two TimeInstant objects, references,
+				of a mixture of any of the three syntaxes; for simplicity and succinctness, we limit the TimePeriod 
+				property in MOX format to usage of timePositions.</para>
+					
+			<para>The &lt;gml:timePosition&gt; property supports the description of a temporal position in a variety of
+				different formats. MOX format documents are expected to adhere to ISO 8601 format. The timePosition
+				may be either date alone (in which case 00:00:00+00 is assumed for the timestamp) or a full date/time value.
+				Time zones should always be specified for a timestamp numerically, though 'Z' is a legal abbreviation for 
+				denoting zulu time.
+				</para>
+			
+			<para>Inexact temporal positions may be expressed using the optional indeterminatePosition attribute. This allows
+			the object to specify after, before, now, and unknown time positions. See GML TimeInstant for a description
+			of the meanings of this attribute.</para>
+						
+			<programlisting>
+	&lt;!-- Time period specified with timestamp --&gt;
+	&lt;gml:TimePeriod gml:id="time-id"&gt;
+		&lt;gml:beginPosition&gt;2009-02-05T13:20:20Z&lt;/gml:beginPosition&gt;		
+		&lt;gml:endPosition&gt;2009-02-05T19:20:20Z&lt;/gml:endPosition&gt;		
+	&lt;/gml:TimeInstant&gt;
+	&lt;!-- Time instant specifying uncertain times --&gt;
+	&lt;gml:TimeInstant gml:id="time-id"&gt;
+		&lt;gml:beginPosition indeterminatePosition="before"&gt;2009-02-05T13:20:20+01&lt;/gml:beginPosition&gt;		
+		&lt;gml:endPosition indeterminatePosition="after"&gt;2009-02-06T19:20:20+01&lt;/gml:endPosition&gt;		
+	&lt;/gml:TimeInstant&gt;
+			</programlisting>
+
+		</sect1>
+									
+	</chapter>
+		
+	<chapter id="cha:mox_parameters">
+		<title>Domain Parameters</title>
+		
+		<para>The domain parameters in MOX are built upon the GML MeasureType and CodeType.</para>
+				
+		<sect1 id="sec:parameters_base">
+			<title>Base Measures and Code Types</title>
+			
+			<para>The measure data type is used for recording measures using specific types of units; e.g.,
+				observation measures and forecasts. Measures generally represent some real-world, physical
+				phenomena such as length, speed, or force.</para>
+			
+			<para>All measures are restrictions on the gml:MeasureType or one of its derivations
+				(e.g., gml:TimeType, gml:SpeedType, etc.). Measures contain the compulsory attribute uom of
+				type UomIdentifier, that is used to describe the unit of measure.</para>
+			
+			<para>The units of measure in MOX shall always be described using case-sensitive Universal Code 
+				for Units of Measure (UCUM).</para>
+			
+			<para>MOX measures are generally restricted on the uom attribute based on the phenomena to permit only
+				the specification of those units of measure that are relevant for the measure. For example, a 
+				mox:TimeType would permit the specification of days, hours, and seconds as the unit of measure, but 
+				not meters or Kelvin.</para>
+			
+			<para>The base measures represent the fundamental scalar data types used in the model. Where possible,
+				these are based on the GML measures of the same type, restricted to the appropriate units of that
+				measure. The base measures are given by the table below.</para>
+			
+			<table frame="all">
+				<title>MOX Base Measures</title>
+				<tgroup cols="3">
+					<colspec align="left"/>
+					<colspec align="left"/>
+					<colspec align="left"/>
+					<thead>
+						<row>
+							<entry> Base measure type </entry>
+							<entry> Units of measure </entry>
+							<entry> Physical phenomena </entry>
+						</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>mox:ScaleType</entry>
+							<entry>% ppm</entry>
+							<entry>Dimensionless (proportion)</entry>
+						</row>
+						<row>
+							<entry>mox:LengthType</entry>
+							<entry>km m mm </entry>
+							<entry>Distance, height, depth</entry>
+						</row>
+						<row>
+							<entry>mox:MassType</entry>
+							<entry>kg g</entry>
+							<entry>Mass</entry>
+						</row>
+						<row>
+							<entry>mox:TimeType</entry>
+							<entry>h min s</entry>
+							<entry>Time, duration, period</entry>
+						</row>
+						<row>
+							<entry>mox:LuminosityType</entry>
+							<entry>cd</entry>
+							<entry>Luminous intensity</entry>
+						</row>
+						<row>
+							<entry>mox:ElectricCurrentType</entry>
+							<entry>A</entry>
+							<entry>Electric current</entry>
+						</row>
+						<row>
+							<entry>mox:TemperatureType</entry>
+							<entry>K Cel</entry>
+							<entry>Temperature</entry>
+						</row>
+						<row>
+							<entry>mox:SubstanceAmountType</entry>
+							<entry>mol</entry>
+							<entry>Substance amount</entry>
+						</row>
+						<row>
+							<entry>mox:AngleType</entry>
+							<entry>rad deg</entry>
+							<entry>Dimensionless (angle)</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+
+			<para>Derived measures add representations for the additional physical phenomena, such as 
+				pressure, speed, force, and so on.</para>
+			
+			<table frame="all">
+				<title>MOX Derived Measures</title>
+				<tgroup cols="3">
+					<colspec align="left"/>
+					<colspec align="left"/>
+					<colspec align="left"/>
+					<thead>
+						<row>
+							<entry> Derived measure type </entry>
+							<entry> Units of measure </entry>
+							<entry> Physical phenomena </entry>
+						</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>mox:SpeedType</entry>
+							<entry>m/s</entry>
+							<entry>Speed, velocity</entry>
+						</row>
+						<row>
+							<entry>mox:PressureType</entry>
+							<entry>hPa kPa Pa N/m2</entry>
+							<entry>Pressure</entry>
+						</row>
+						<row>
+							<entry>mox:ForceType</entry>
+							<entry>N</entry>
+							<entry>Force</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+			
+			<para>Derived measures are added to the model as required by the applications.</para>
+			
+			<para>The gml:CodeType type is used to represent codetable types.</para>
+			
+		</sect1>
+
+		<sect1 id="sec:parameters_mox">
+			<title>MOX Parameters</title>
+			
+			<para>The MOX parameters are domain specific elements based on the measure types
+				that are used to record the meteorological and oceanographic parameters of
+				features. Where possible, the values and attributes of the parameter shall
+				be restricted.</para>
+			
+			<para>Parameters typically represent some domain or functional specification of
+			the base measures and code types. The following table lists a few examples of 
+			the parameter elements.</para>			
+			
+			<table frame="all">
+				<title>MOX Parameters</title>
+				<tgroup cols="3">
+					<colspec align="left"/>
+					<colspec align="left"/>
+					<colspec align="left"/>
+					<thead>
+						<row>
+							<entry> MOX parameter property</entry>
+							<entry> Base measure type </entry>
+							<entry> Description </entry>
+						</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>mox:windSpeed</entry>
+							<entry>mox:SpeedType</entry>
+							<entry>Wind velocity, measured as described by the feature procedure</entry>
+						</row>
+						<row>
+							<entry>mox:airPressure</entry>
+							<entry>mox:PressureType</entry>
+							<entry>Air pressure, measured as described by the feature procedure</entry>
+						</row>
+						<row>
+							<entry>mox:maxAirTemperature</entry>
+							<entry>mox:Temperature</entry>
+							<entry>Maximum temperature of the air (over the given period), measured as described by the feature procedure</entry>
+						</row>
+						<row>
+							<entry>mox:seaTemperature</entry>
+							<entry>mox:Temperature</entry>
+							<entry>Temperature of the sea, measured as described by the feature procedure</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+
+			<para>MOX parameters are extended as required in order to support new observation, forecast, and product features.</para>
+			
+		</sect1>
+				
+	</chapter>
+
+				
+	<chapter id="cha:metno_features">
+		<title>Met.no Products</title>
+		
+		<para>The products of api.met.no described here are derived from the MOX format domain features.
+			These features implement business logic.</para>
+				
+		<sect1 id="sec:metno_oceanforecast">
+			<title>Met.no Ocean Forecast</title>
+			
+			<para>The metno:OceanForecast feature represents a single time instant or time period ocean forecast.
+				It is a point forecast that only allows wave, water circulation and a limited subset of weather
+				parameters.</para>
+			
+		</sect1>
+				
+	</chapter>		
+
+</book>

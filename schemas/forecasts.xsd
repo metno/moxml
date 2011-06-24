@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+	targetNamespace="http://wdb.met.no/wdbxml"
+	xmlns:mox="http://wdb.met.no/wdbxml"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:gml="http://www.opengis.net/gml/3.2"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	elementFormDefault="qualified" 
+	version="0.1">
+	<xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+	<xsd:include schemaLocation="parameters.xsd"/>
+	<xsd:include schemaLocation="time.xsd"/>
+
+	<!-- Process Information (Source) -->
+	<xsd:element name="procedure" type="gml:ProcedurePropertyType"/>
+	
+	<!-- Observed Property -->
+	<xsd:element name="observedProperty" type="gml:TargetPropertyType"/>
+
+	<!-- Geographic Information -->
+	<xsd:element name="forecastPoint" type="gml:PointPropertyType"/>
+		
+	<!-- Forecast Collection -->
+	<xsd:element name="Forecasts" type="mox:ForecastCollectionType" substitutionGroup="gml:AbstractFeature"/>
+	<xsd:complexType name="ForecastCollectionType">
+		<xsd:complexContent>
+			<xsd:extension base="gml:AbstractFeatureType">
+				<xsd:sequence>
+					<!-- Source and location information -->
+					<xsd:element ref="mox:procedure" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="mox:observedProperty" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:forecastPoint" minOccurs="0" maxOccurs="1"/>
+					<!-- Time information -->
+					<xsd:element ref="mox:analysisTime" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:issueTime" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:nextIssueTime" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:validTime" minOccurs="0" maxOccurs="1"/>
+					<!-- Forecasts -->
+					<xsd:element name="forecast" type="mox:ForecastMemberType" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType> 
+	<xsd:complexType name="ForecastMemberType">
+		<xsd:complexContent>
+			<xsd:extension base="gml:AbstractFeatureMemberType">
+				<xsd:sequence minOccurs="0">
+					<xsd:element ref="mox:Forecast"/>
+				</xsd:sequence>
+				<xsd:attributeGroup ref="gml:AssociationAttributeGroup"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<!-- Forecast Structure -->	
+	<xsd:element name="Forecast" type="mox:ForecastType" substitutionGroup="gml:AbstractFeature"/>
+	<xsd:complexType name="ForecastType">
+		<xsd:complexContent>
+			<xsd:extension base="gml:AbstractFeatureType">
+				<xsd:sequence>
+					<!-- Source and location information -->
+					<xsd:element ref="mox:procedure" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="mox:observedProperty" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:forecastPoint" minOccurs="0" maxOccurs="1"/>
+					<!-- Time information -->
+					<xsd:element ref="mox:analysisTime" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:issueTime" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:nextIssueTime" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:validTime" minOccurs="0" maxOccurs="1"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+</xsd:schema>

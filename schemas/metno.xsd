@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+	targetNamespace="http://api.met.no"
+	xmlns:mox="http://wdb.met.no/wdbxml"
+	xmlns:metno="http://api.met.no"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:gml="http://www.opengis.net/gml/3.2"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	elementFormDefault="qualified" 
+	version="0.1">
+	<xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+	<xsd:import namespace="http://wdb.met.no/wdbxml" schemaLocation="mox.xsd"/>
+	
+	<!-- YR Location Forecast -->	
+	<xsd:element name="LocationForecast" type="metno:LocationForecastType" substitutionGroup="mox:Forecast"/>
+	<xsd:complexType name="LocationForecastType">
+		<xsd:complexContent>
+			<xsd:extension base="mox:ForecastType">
+				<xsd:sequence>
+					<!-- Location Forecast Parameters -->
+					<xsd:element ref="mox:airPressure" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:airTemperature" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:totalCloudCover" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:lowCloudCover" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:mediumCloudCover" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:highCloudCover" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:fogCover" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:humidity" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:precipitation" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:windDirection" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:windSpeed" minOccurs="0" maxOccurs="1"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<!-- YR Ocean Forecast -->	
+	<xsd:element name="OceanForecast" type="metno:OceanForecastType" substitutionGroup="mox:Forecast"/>
+	<xsd:complexType name="OceanForecastType">
+		<xsd:complexContent>
+			<xsd:extension base="mox:ForecastType">
+				<xsd:sequence>
+					<!-- Ocean Forecast Parameters -->
+					<xsd:element ref="mox:airPressure" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:airTemperature" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:precipitation" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:seaBottomTopography" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:seaCurrentDirection" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:seaCurrentSpeed" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:seaIcePresence" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:seaSalinity" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:seaSurfaceHeight" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:seaTemperature" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:meanTotalWaveDirection" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:peakTotalWaveDirection" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:significantTotalWaveHeight" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:windDirection" minOccurs="0" maxOccurs="1"/>
+					<xsd:element ref="mox:windSpeed" minOccurs="0" maxOccurs="1"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+</xsd:schema>

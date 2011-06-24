@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wdb:Forecasts gml:id="fc20090130" xmlns="http://wdb.met.no/wdbxml"
+	xmlns:wdb="http://wdb.met.no/wdbxml"
+	xmlns:gml="http://www.opengis.net/gml/3.2"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://wdb.met.no/wdbxml http://wdb.met.no/wdbxml/schema/wdbxml.xsd">
+	
+	<wdb:procedure xlink:href="http://api.met.no/hirlam4"/>
+	<wdb:procedure xlink:href="http://api.met.no/ec"/>
+	<wdb:observedProperty xlink:href="urn:x-ogc:def:phenomenon:weather"/>
+	<wdb:forecastPoint>
+		<gml:Point gml:id="oslo" srsName="EPSG:4326">
+			<gml:pos>38.99 -77.99</gml:pos>
+		</gml:Point>
+	</wdb:forecastPoint>
+	<wdb:referenceTime>
+		<gml:TimeInstant gml:id="rt0">
+			<gml:timePosition>2005-08-11T10:43:00</gml:timePosition>
+		</gml:TimeInstant>
+	</wdb:referenceTime>
+	
+	<wdb:forecast>
+		<wdb:Forecast gml:id="f1">
+			<wdb:validTime>
+				<gml:TimePeriod gml:id="t1">
+					<gml:beginPosition>2009-02-10T12:00:00Z</gml:beginPosition>
+					<gml:endPosition>2009-02-10T12:00:00Z</gml:endPosition>
+				</gml:TimePeriod>
+			</wdb:validTime>
+			<wdb:airPressure uom="hPa">1017.4</wdb:airPressure>
+			<wdb:airTemperature uom="Cel">31.0</wdb:airTemperature>
+			<wdb:totalCloudCover uom="%">80.7</wdb:totalCloudCover>
+			<wdb:lowCloudCover uom="%">0.0</wdb:lowCloudCover>
+			<wdb:mediumCloudCover uom="%">56.8</wdb:mediumCloudCover>
+			<wdb:highCloudCover uom="%">56.3</wdb:highCloudCover>
+			<wdb:fogCover uom="%">0.0</wdb:fogCover>
+			<wdb:humidity uom="%">91.5</wdb:humidity>
+			<wdb:windDirection uom="deg">89.1</wdb:windDirection>
+			<wdb:windSpeed uom="m/s">0.6</wdb:windSpeed>
+		</wdb:Forecast>
+	</wdb:forecast>
+	
+	<wdb:forecast>
+		<wdb:Forecast gml:id="f2">
+			<wdb:validTime>
+				<gml:TimePeriod gml:id="t2">
+					<gml:beginPosition>2009-02-10T09:00:00Z</gml:beginPosition>
+					<gml:endPosition>2009-02-10T12:00:00Z</gml:endPosition>
+				</gml:TimePeriod>
+			</wdb:validTime>
+			<wdb:precipitation uom="%">0.0</wdb:precipitation>
+		</wdb:Forecast>
+	</wdb:forecast>
+	
+</wdb:Forecasts>
